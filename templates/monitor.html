@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Monitoring</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: #0f172a;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+            margin: 0;
+        }
+
+        h2 {
+            margin-top: 25px;
+        }
+
+        .chart-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .chart-container {
+            width: 500px;
+            background: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        canvas {
+            max-height: 300px;
+        }
+
+        .back-btn {
+            margin: 30px 0;
+            display: inline-block;
+            padding: 10px 20px;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .no-data {
+            color: #94a3b8;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>📊 Real-Time Suspicious IP Monitoring</h2>
+
+<div class="chart-wrapper">
+
+    <div class="chart-container">
+        <h3>Bar Chart</h3>
+        <canvas id="barChart"></canvas>
+        <div id="noDataBar" class="no-data"></div>
+    </div>
+
+    <div class="chart-container">
+        <h3>Pie Chart</h3>
+        <canvas id="pieChart"></canvas>
+        <div id="noDataPie" class="no-data"></div>
+    </div>
+
+</div>
+
+<a href="/home" class="back-btn">⬅ Back to Dashboard</a>
+
+<script>
+let barChart;
+let pieChart;
+
+const barCtx = document.getElementById('barChart').getContext('2d');
+const pieCtx = document.getElementById('pieChart').getContext('2d');
+
+barChart = new Chart(barCtx, {
+    type: 'bar',
+    data: {
+        labels: [],
+        datasets: [{
+            data: [],
+            backgroundColor: '#ef4444'
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                    return context.label + " — " + context.raw + " packets";
+                }
+            }
+        }
+
+        },
+        scales: {
+            x: {
+                ticks: { color: 'white' },
+                grid: { color: '#334155' }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: { color: 'white', precision: 0 },
+                grid: { color: '#334155' }
+            }
+        }
+    }
+});
+
+pieChart = new Chart(pieCtx, {
+    type: 'pie',
+    data: {
+        labels: [],
+        datasets: [{
+            data: [],
+            backgroundColor: [
+                '#ef4444',
+                '#f97316',
+                '#facc15',
+                '#22c55e',
+                '#3b82f6',
+                '#8b5cf6',
+                '#ec4899',
+                '#14b8a6'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                    return context.label + " — " + context.raw + " packets";
+                }
+            }
+        }
+        }
+    }
+});
+
+async function loadData() {
+    try {
+        const response = await fetch('/api/suspicious-stats');
+        const data = await response.json();
+
+        const labels = Object.keys(data);
+        const values = Object.values(data);
+
+        if (labels.length === 0) {
+            document.getElementById("noDataBar").innerText = "No suspicious activity detected.";
+            document.getElementById("noDataPie").innerText = "No suspicious activity detected.";
+            } else {
+            document.getElementById("noDataBar").innerText = "";
+            document.getElementById("noDataPie").innerText = "";
+        }
+
+        barChart.data.labels = labels;
+        barChart.data.datasets[0].data = values;
+        barChart.update();
+
+        pieChart.data.labels = labels;
+        pieChart.data.datasets[0].data = values;
+        pieChart.update();
+
+    } catch (error) {
+        console.log("Error fetching monitoring data");
+    }
+}
+
+loadData();
+setInterval(loadData, 3000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DDoS Monitoring System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #0f172a, #1e293b);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: #020617;
+            border-bottom: 1px solid #1e293b;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #cbd5e1;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59,130,246,0.3);
+        }
+
+        /* HERO */
+        .hero {
+            flex: 1;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(59,130,246,0.25), transparent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            max-width: 750px;
+            margin: auto;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .google-section {
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .google-btn-large {
+            padding: 14px 30px;
+            background: #4285F4;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .google-btn-large:hover {
+            background: #357ae8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(66,133,244,0.3);
+        }
+
+        /* FEATURES */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-box {
+            background: rgba(15,23,42,0.7);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            width: 280px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-8px);
+            border-color: rgba(59,130,246,0.4);
+            box-shadow: 0 20px 40px rgba(59,130,246,0.2);
+        }
+
+        footer {
+            background: #020617;
+            text-align: center;
+            padding: 15px;
+            border-top: 1px solid #1e293b;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 34px; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="logo">🛡 DDoS Monitor</div>
+
+        <div class="nav-links">
+            <a href="#">About</a>
+            <a href="#">Features</a>
+            <a href="#">Contact</a>
+            <a href="#">Support</a>
+        </div>
+
+        <!-- UPDATED LOGIN LINK -->
+        <div>
+            <a href="/login-page" class="login-btn">Login</a>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <h1>Advanced DDoS Protection & Monitoring</h1>
+
+        <p>
+            Our DDoS Monitoring System detects malicious traffic,
+            monitors real-time network activity, and mitigates distributed
+            denial-of-service attacks automatically using intelligent
+            traffic analysis and machine learning techniques.
+        </p>
+
+        <!-- UPDATED GOOGLE BUTTON -->
+        <div class="google-section">
+            <a href="/login-page">
+                <button class="google-btn-large">Continue with Google</button>
+            </a>
+        </div>
+
+        <div class="features">
+
+            <div class="feature-box">
+                <h3>🔒 Protect</h3>
+                <p>Automatically block suspicious IP addresses and prevent attacks.</p>
+            </div>
+
+            <div class="feature-box">
+                <h3>📊 Monitor</h3>
+                <p>Real-time packet capture and traffic visualization.</p>
+            </div>
+
+            <div class="feature-box">
+                <h3>🚨 Detect</h3>
+                <p>AI engine identifies abnormal traffic instantly.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+        © 2026 DDoS Monitoring System
+    </footer>
+
+</body>
+</html>
